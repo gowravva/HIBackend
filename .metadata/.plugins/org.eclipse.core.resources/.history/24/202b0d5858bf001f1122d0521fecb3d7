@@ -1,0 +1,5 @@
+package com.healthins.serviceint;
+
+public interface RelationService {
+
+}

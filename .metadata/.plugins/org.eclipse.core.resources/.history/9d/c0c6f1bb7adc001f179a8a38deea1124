@@ -1,0 +1,56 @@
+package com.healthins.serviceimplemention;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.healthins.model.PaymentModel;
+import com.healthins.repo.PaymentRepo;
+import com.healthins.serviceint.PaymentService;
+
+@Service
+public class PaymentServiceImplementation implements PaymentService {
+
+    @Autowired
+    private PaymentRepo paymentRepo;
+
+    @Override
+    public PaymentModel savePayment(PaymentModel payment) {
+        return paymentRepo.save(payment);
+    }
+
+    @Override
+    public PaymentModel getPaymentById(Long id) {
+        Optional<PaymentModel> payment = paymentRepo.findById(id);
+        return payment.orElseThrow(() -> new RuntimeException("Payment not found with id: " + id));
+    }
+
+    @Override
+    public List<PaymentModel> getAllPayments() {
+        return paymentRepo.findAll();
+    }
+
+    @Override
+    public PaymentModel updatePayment(Long id, PaymentModel payment) {
+        PaymentModel existingPayment = getPaymentById(id);
+
+        // Update the fields
+        existingPayment.setCustomerId(payment.getCustomerId());
+        existingPayment.setPaymentId(payment.getPaymentId());
+        existingPayment.setPremiuAmount(payment.getPremiuAmount());
+        existingPayment.setSumAssuredAmount(payment.getSumAssuredAmount());
+        existingPayment.setYear(payment.getYear());
+        existingPayment.setDiseaseAmount(payment.getDiseaseAmount());
+        existingPayment.setDiscountAmount(payment.getDiscountAmount());
+
+        return paymentRepo.save(existingPayment);
+    }
+
+    @Override
+    public void deletePayment(Long id) {
+        paymentRepo.deleteById(id);
+    }
+}

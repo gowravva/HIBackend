@@ -1,0 +1,5 @@
+package com.healthins.repo;
+
+public interface RelationRepository {
+
+}

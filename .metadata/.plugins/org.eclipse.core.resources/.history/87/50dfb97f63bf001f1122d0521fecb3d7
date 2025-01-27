@@ -1,0 +1,53 @@
+package com.healthins.serviceimplemention;
+
+	import java.util.Optional;
+
+	import org.springframework.beans.factory.annotation.Autowired;
+	import org.springframework.http.HttpStatus;
+	import org.springframework.http.ResponseEntity;
+	import org.springframework.stereotype.Service;
+
+	import com.healthins.dto.RelationDto;
+	import com.healthins.model.RelationModel;
+	import com.healthins.repo.RelationRepository;
+	import com.healthins.serviceint.RelationService;
+
+	@Service
+	public class RelationServiceImplemention implements RelationService {
+
+	    @Autowired
+	    private RelationRepository repository;
+	    @Override
+	    public ResponseEntity<?> saveHealthIns(RelationDto relation) {
+	        try {
+	            // Check if a record with the given Customer ID already exists
+	            Optional<RelationModel> existingRelation = repository.findByCustomerId(relation.getCustomerId());
+
+	            if (existingRelation.isPresent()) {
+	                return ResponseEntity.status(HttpStatus.CONFLICT)
+	                        .body("Customer ID already exists.");
+	            }
+
+	            // Create and populate the RelationModel
+	            RelationModel relationModel = new RelationModel();
+	            relationModel.setCustomerId(relation.getCustomerId());
+	            relationModel.setRelationName(relation.getRelationName());
+	            relationModel.setAgeOfTheRelation(relation.getAgeOfTheRelation());
+	            relationModel.setRelationPersonName(relation.getRelationPersonName());
+
+	            // Save the RelationModel to the repository
+	            repository.save(relationModel);
+
+	            return ResponseEntity.status(HttpStatus.CREATED)
+	                    .body("Relation saved successfully.");
+	        } catch (Exception e) {
+	            // Log the exception and return a generic error message
+	            e.printStackTrace();
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                    .body("An error occurred while saving the relation.");
+	        }
+	    }
+	}
+
+
+

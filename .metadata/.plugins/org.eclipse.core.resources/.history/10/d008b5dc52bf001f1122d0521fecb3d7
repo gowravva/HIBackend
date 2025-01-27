@@ -1,0 +1,5 @@
+package com.healthins.dto;
+
+public class RelationDto {
+
+}

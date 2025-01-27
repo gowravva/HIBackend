@@ -1,0 +1,46 @@
+package com.healthins.serviceimplemention;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import com.healthins.model.RelationModel;
+import com.healthins.repo.RelationRepository;
+import com.healthins.serviceint.RelationService;
+
+public class RelationServiceImplemention implements RelationService {
+	
+
+		    @Autowired
+		    private RelationRepository repository;
+
+		    @Override
+		    public ResponseEntity<?> saveRelation(RelationModel relation) {
+		        try {
+		            repository.save(relation);
+		            return ResponseEntity.status(HttpStatus.CREATED).body("Relation data saved successfully.");
+		        } catch (Exception e) {
+		            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+		                    .body("An error occurred while saving the relation: " + e.getMessage());
+		        }
+		    }
+
+			@Override
+			public ResponseEntity<?> getRelationsByCustomerId(String customerId) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public ResponseEntity<?> getAllRelations() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+	}
+
+
+
+
+
+}

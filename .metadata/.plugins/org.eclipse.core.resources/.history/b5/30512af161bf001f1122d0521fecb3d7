@@ -1,0 +1,16 @@
+package com.healthins.serviceint;
+
+import org.springframework.http.ResponseEntity;
+
+import com.healthins.model.RelationModel;
+
+public interface RelationService {
+	    ResponseEntity<?> saveRelation(RelationModel relation);
+	    ResponseEntity<?> getRelationsByCustomerId(String customerId);
+	    ResponseEntity<?> getAllRelations();
+		ResponseEntity<?> updateRelation(Long id, RelationModel updatedRelation);
+		ResponseEntity<?> deleteRelation(Long id);
+	}
+
+
+

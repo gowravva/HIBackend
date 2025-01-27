@@ -1,0 +1,17 @@
+package com.healthins.repo;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.healthins.model.RelationModel;
+@Repository
+public interface RelationRepository extends JpaRepository<RelationModel, Long>{
+
+	Optional<RelationModel> findByCustomerId(String customerId);
+	
+}	
+	
+
+

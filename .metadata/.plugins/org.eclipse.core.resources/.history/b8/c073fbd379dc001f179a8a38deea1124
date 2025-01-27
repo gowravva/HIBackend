@@ -1,0 +1,17 @@
+package com.healthins.serviceint;
+
+import java.util.List;
+
+import com.healthins.model.PaymentModel;
+
+public interface PaymentService {
+	
+	    PaymentModel savePayment(PaymentModel payment);
+	    PaymentModel getPaymentById(Long id);
+	    List<PaymentModel> getAllPayments();
+	    PaymentModel updatePayment(Long id, PaymentModel payment);
+	    void deletePayment(Long id);
+	}
+
+
+

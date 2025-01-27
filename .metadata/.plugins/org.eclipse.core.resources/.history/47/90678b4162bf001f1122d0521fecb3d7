@@ -1,0 +1,44 @@
+package com.healthins.serviceimplemention;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.healthins.dto.RelationDto;
+import com.healthins.model.RelationModel;
+import com.healthins.repo.RelationRepository;
+import com.healthins.serviceint.RelationService;
+
+
+@Service
+public class RelationServiceImplemention implements RelationService {
+
+    @Autowired
+    private RelationRepository repository;
+    
+    @Autowired
+    private RelationModel relatioModel;
+@Override
+    public ResponseEntity<?> savehealthIns(RelationDto relation) {
+        Optional<RelationModel> existingRelation = repository.findByCustomerId(relation.getCustomerId());
+
+        if (existingRelation.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Customer ID already exists.");
+        }
+        RelationModel relationModel = new RelationModel();
+        relationModel.setCustomerId(relation.getCustomerId());
+        relationModel.setRelationName(relation.getRelationName());
+        relationModel.setAgeOfTheRelation(relation.getAgeOfTheRelation());
+        relationModel.setRelationPersonName(relation.getRelationPersonName());
+
+        repository.save(relationModel);
+   
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Relation saved successfully.");
+    }
+ }

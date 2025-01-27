@@ -1,0 +1,17 @@
+package com.healthins.repo;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.healthins.model.RegistrationModel;
+
+@Repository
+public interface HealthInsurenceRepository extends JpaRepository<RegistrationModel, Long> {
+    Optional<RegistrationModel> findByMobileNo(String mobileNo); // Ensure this is present
+    Optional<RegistrationModel> findByEmail(String email);       // If not already present
+	Optional<RegistrationModel> findByMobileNoOrEmail(String mobileNo, String email);
+	 Optional<RegistrationModel> findByCustomerId(String customerId) ;
+	
+}
